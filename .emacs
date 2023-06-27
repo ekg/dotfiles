@@ -39,12 +39,6 @@
   :config
   (load-theme 'ujelly t))
 
-;; Codex-Completion Package
-;(use-package codex-completion
-;  :straight (codex-completion :type git :host github :repo "debanjum/codex-completion")
-;  :bind ("C-c ." . 'codex-completion)
-;  :config (setq codex-completion-openai-api-token "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"))
-
 (use-package copilot
   :straight (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
   :ensure t)
@@ -90,7 +84,7 @@
   ;; what to use when checking on-save. "check" is default, I prefer clippy
   (lsp-rust-analyzer-cargo-watch-command "clippy")
   (lsp-eldoc-render-all t)
-  (lsp-idle-delay 0.6)
+  ;;(lsp-idle-delay 0.6)
   ;; enable / disable the hints as you prefer:
   (lsp-rust-analyzer-server-display-inlay-hints t)
   (lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial")
@@ -126,10 +120,17 @@
   ;; use flycheck in rust-mode
   (add-hook 'rust-mode-hook 'flycheck-mode))
 
+;; install code folding with origami
+;(use-package origami
+;  :straight t
+;  :config
+;  (global-origami-mode)
+;  (add-hook 'prog-mode-hook 'origami-mode))
+
 ;; install company-box, which plays nice with copilot
-(use-package company-box
-  :straight t
-  :hook (company-mode . company-box-mode))
+;(use-package company-box
+;  :straight t
+;  :hook (company-mode . company-box-mode))
 
 ;(use-package humanoid-themes
 ;  :straight t
@@ -233,3 +234,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
