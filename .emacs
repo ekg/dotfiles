@@ -121,8 +121,15 @@
 (use-package flycheck
   :straight t
   :config
+  ;; use flycheck in cpp-mode
+  (add-hook 'c++-mode-hook 'flycheck-mode)
   ;; use flycheck in rust-mode
   (add-hook 'rust-mode-hook 'flycheck-mode))
+
+;; install company-box, which plays nice with copilot
+(use-package company-box
+  :straight t
+  :hook (company-mode . company-box-mode))
 
 ;(use-package humanoid-themes
 ;  :straight t
@@ -141,11 +148,11 @@
   ;; use regular sized text
   :hook (adoc-mode . (lambda () (text-scale-set 0))))
 
-;; flyspell
+;; flyspell for text mode only
 (use-package flyspell
   :straight t
-  :hook (text-mode . flyspell-mode)
-  :hook (prog-mode . flyspell-prog-mode))
+  :hook (text-mode . flyspell-mode))
+  ;:hook (prog-mode . flyspell-prog-mode))
 
 ;; setup ess with straight.el
 (use-package ess
@@ -179,6 +186,7 @@
   :bind ([f8] . 'whisper-run)
   :bind ("C-c w" . 'whisper-run))
 
+;; turn off tool bar
 (tool-bar-mode 0)
 ;;(menu-bar-mode -1)
 (menu-bar-mode 0)
