@@ -31,7 +31,7 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-(straight-use-package 'el-patch)
+;(straight-use-package 'el-patch)
 (straight-use-package 'use-package)
 
 (use-package ujelly-theme
@@ -42,7 +42,6 @@
 (use-package copilot
   :straight (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
   :ensure t)
-;; you can utilize :map :hook and :config to customize copilot
 
 (add-hook 'prog-mode-hook 'copilot-mode)
 
@@ -53,15 +52,43 @@
 
 (with-eval-after-load 'copilot
   (define-key copilot-mode-map (kbd "<tab>") #'my/copilot-tab)
-  (define-key copilot-mode-map (kbd "TAB") #'my/copilot-tab))
+  (define-key copilot-mode-map (kbd "TAB") #'my/copilot-tab)
+  (define-key copilot-mode-map (kbd "C-<tab>") #'copilot-complete)
+  (define-key copilot-mode-map (kbd "C-c y") #'my/copilot-tab))
 
-;; TODO fixme
+;;(setenv "OPENAI_API_KEY" (string-trim (shell-command-to-string "pass show openai.com/api-key")))
+;; install chatgpt.el from https://github.com/barryridge/ChatGPT.el/tree/joshcho-set-backend-model
+;; looks cool but can't make it work :(
+
 ;; Codex-Completion Package
-;(use-package codex-completion
-;  :straight (codex-completion :type git :host github :repo "debanjum/codex-completion")
-;  :bind ("C-c x" . 'codex-completion)
-;  :bind ("C-c i" . 'codex-completion)
-;  :config (setq codex-completion-openai-api-token "..."))
+;;(use-package codex-completion
+;;  :straight (codex-completion :type git :host github :repo "debanjum/codex-completion")
+;;  :bind ("C-c x" . 'codex-completion)
+;;  :bind ("C-c i" . 'codex-completion)
+;;  :config (setq codex-completion-openai-api-token (string-trim (shell-command-to-string "pass show openai.com/api-key"))))
+
+;;(use-package gptel
+;;  :straight t
+;;  :config
+;;  (setq gptel-api-key (string-trim (shell-command-to-string "pass show openai.com/api-key")))
+;;  (setq gptel-model "gpt-3.5-turbo-16k"))
+
+;; install gptel from github using straight https://github.com/karthink/gptel
+(use-package gptel
+  :straight (gptel :type git :host github :repo "karthink/gptel" :files ("*.el"))
+  :bind ("C-c x" . 'gptel-send)
+  :config
+  (setq gptel-api-key (string-trim (shell-command-to-string "pass show openai.com/api-key")))
+  (setq-default gptel-model "gpt-4"))
+;;(setq gptel-model "gpt-3.5-turbo-16k"))
+
+;; install company using straight from melpa
+(use-package company
+  :straight t
+  :config
+  (setq company-idle-delay 0.1)
+  (setq company-minimum-prefix-length 1)
+  (global-company-mode t))
 
 ;; install rust-mode using straight from melpa
 (use-package rust-mode
@@ -156,22 +183,22 @@
   ;:hook (prog-mode . flyspell-prog-mode))
 
 ;; setup ess with straight.el
-(use-package ess
-  :straight t
-  :mode ("\\.R\\'" . R-mode)
-  :config
-  (setq ess-ask-for-ess-directory nil)
-  (setq ess-eval-visibly-p nil)
-  (setq ess-use-flymake nil)
-  (setq ess-use-company nil)
-  (setq ess-use-tracebug nil)
-  (setq ess-use-auto-complete nil)
-  (setq ess-use-eldoc nil)
-  (setq ess-use-ido nil)
-  (setq ess-use-underscore nil)
-  (setq ess-use-inferior-program-in-buffer-name nil)
-  (setq ess-use-inferior-program-in-buffer-name nil))
-
+;;(use-package ess
+;;  :straight t
+;;  :mode ("\\.R\\'" . R-mode)
+;;  :config
+;;  (setq ess-ask-for-ess-directory nil)
+;;  (setq ess-eval-visibly-p nil)
+;;  (setq ess-use-flymake nil)
+;;  (setq ess-use-company nil)
+;;  (setq ess-use-tracebug nil)
+;;  (setq ess-use-auto-complete nil)
+;;  (setq ess-use-eldoc nil)
+;;  (setq ess-use-ido nil)
+;;  (setq ess-use-underscore nil)
+;;  (setq ess-use-inferior-program-in-buffer-name nil)
+;;  (setq ess-use-inferior-program-in-buffer-name nil))
+;;
 ;; setup tidal cycles with straight.el from github
 (use-package tidal :straight t)
 
@@ -182,7 +209,7 @@
   ;; models could be tiny, tiny.en, base, base.en, small, small.en, medium, medium.en, large
   :config (setq whisper-model "small.en"
   ;;            whisper-language "en"
-  ;;            whisper-enable-speed-up t
+                ;;            whisper-enable-speed-up t
                 whisper-use-threads 16)
   :bind ([f8] . 'whisper-run)
   :bind ("C-c w" . 'whisper-run))
@@ -206,7 +233,6 @@
  ((member "DejaVu Sans Mono" (font-family-list))
   (set-face-attribute 'default nil :font "DejaVu Sans Mono-12")))
 
-
 (setq c-default-style "linux"
       c-basic-offset 4)
 
@@ -217,6 +243,12 @@
              (setq-default indent-tabs-mode nil)
              (setq c-basic-indent 4)
              (setq tab-width 4)))
+
+;; install solarized and use light mode
+;;(use-package solarized-theme
+;;  :straight t
+;;  :config
+;;  (load-theme 'solarized-light t))
 
 (savehist-mode 1)
 
@@ -234,4 +266,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+
 
