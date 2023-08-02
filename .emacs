@@ -147,6 +147,14 @@
   ;; use flycheck in rust-mode
   (add-hook 'rust-mode-hook 'flycheck-mode))
 
+;; install cpputils-cmake using straight from melpa
+;(use-package cpputils-cmake
+;  :straight t)
+
+;; install cmake-mode from melpa
+;(use-package cmake-mode
+;  :straight t)
+
 ;; install code folding with origami
 ;(use-package origami
 ;  :straight t
@@ -223,15 +231,15 @@
 
 (cond
  ((member "Noto Mono" (font-family-list))
-  (set-face-attribute 'default nil :font "Noto Mono-12"))
+  (set-face-attribute 'default nil :font "Noto Mono-11"))
  ((member "Monaco" (font-family-list))
-  (set-face-attribute 'default nil :font "Monaco-12"))
+  (set-face-attribute 'default nil :font "Monaco-11"))
  ((member "Inconsolata" (font-family-list))
-  (set-face-attribute 'default nil :font "Inconsolata-12"))
+  (set-face-attribute 'default nil :font "Inconsolata-11"))
  ((member "Consolas" (font-family-list))
-  (set-face-attribute 'default nil :font "Consolas-12"))
+  (set-face-attribute 'default nil :font "Consolas-11"))
  ((member "DejaVu Sans Mono" (font-family-list))
-  (set-face-attribute 'default nil :font "DejaVu Sans Mono-12")))
+  (set-face-attribute 'default nil :font "DejaVu Sans Mono-11")))
 
 (setq c-default-style "linux"
       c-basic-offset 4)
